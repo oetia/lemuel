@@ -1,6 +1,2 @@
-console.log("FUCKING FUCK");
-
-const freezeBlockElem = document.getElementById("freezeBlock");
-console.log(freezeBlockElem);
-
-const clickListener = () => {};
+console.log("FUCKING LOLICONS");
+var freezeBlock = document.getElementById("freezeBlock");
