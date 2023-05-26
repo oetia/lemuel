@@ -8,12 +8,17 @@ const config: webpack.Configuration = {
         background: path.join(__dirname, "src", "background.ts"),
         twitter: path.join(__dirname, "src", "content-scripts", "twitter.ts"),
         civitai: path.join(__dirname, "src", "content-scripts", "civitai.ts"),
-        nhen: path.join(__dirname, "src", "content-scripts", "nhentai.ts"),
+        nhen: path.join(__dirname, "src", "content-scripts", "nhen.ts"),
         focus: path.join(__dirname, "src", "content-scripts", "focus.ts"),
     },
     output: {
         path: path.join(__dirname, "dist", "src"),
-        filename: "[name].js",
+        filename: (pathData: any) => {
+            console.log(pathData.chunk);
+            return pathData.chunk.name === "background"
+                ? "[name].js"
+                : "content-scripts/[name].js";
+        },
     },
     module: {
         rules: [
