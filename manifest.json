@@ -18,11 +18,15 @@
     "content_scripts": [
       {
         "matches": ["https://*.nhentai.net/*"],
-        "js": ["src/nhentai.js"]
+        "js": ["src/content-scripts/nhen.js"]
+      },
+      {
+        "matches": ["https://*.civitai.com/*"],
+        "js": ["src/content-scripts/civitai.js"]
       },
       {
         "matches": ["https://*.youtube.com/*", "https://*.twitter.com/*"],
-        "js": ["src/halt.js"]
+        "js": ["src/content-scripts/focus.js"]
       }
     ],
     "web_accessible_resources": [
