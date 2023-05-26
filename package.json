@@ -4,6 +4,7 @@
   "author": "0eti <samuelzhang012@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@types/chrome": "^0.0.237",
     "@types/node": "^20.2.4",
     "@types/webpack": "^5.28.1",
     "typescript": "^5.0.4",
