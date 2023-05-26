@@ -6,6 +6,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         chrome.downloads
             .download({
                 url: request.url,
+                filename: `civitai/${request.folder}/${new Date().getTime()}.${
+                    request.fileType
+                }`,
             })
             .then(() => {
                 sendResponse("success");

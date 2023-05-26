@@ -28,10 +28,13 @@ async function clickListener(event: MouseEvent) {
         return ogImageUrl;
     }
 
-    async function initiateDownload(imageUrl: string) {
+    async function initiateDownload(imageUrl: string, folder: string) {
+        const fileType = imageUrl.split(".").pop();
         chrome.runtime.sendMessage({
             type: "download",
             url: imageUrl,
+            folder,
+            fileType,
         });
     }
 
@@ -40,14 +43,21 @@ async function clickListener(event: MouseEvent) {
         const element = path[idx] as HTMLElement;
         if (
             element.tagName === "BUTTON" &&
-            element.classList.contains("mantine-UnstyledButton-root")
+            element.classList.contains("mantine-UnstyledButton-root") &&
+            element.classList.contains("mantine-Button-root") &&
+            element.classList.contains("mantine-5ko2nj") // not selected class
         ) {
-            const rawPostUrl = extractRawPostUrl(path.slice(idx + 1));
-            console.log(rawPostUrl);
+            const rawPostUrl = extractRawPostUrl(path);
             if (rawPostUrl) {
                 const imageUrl = await getImageUrlFromRawPostUrl(rawPostUrl);
                 if (imageUrl) {
-                    await initiateDownload(imageUrl);
+                    if (element.textContent?.includes("👍")) {
+                        await initiateDownload(imageUrl, "horn");
+                    } else if (element.textContent?.includes("❤️")) {
+                        await initiateDownload(imageUrl, "like");
+                    } else if (element.textContent?.includes("😂")) {
+                        await initiateDownload(imageUrl, "love");
+                    }
                 }
             }
             break;
@@ -55,3 +65,5 @@ async function clickListener(event: MouseEvent) {
     }
 }
 document.body.addEventListener("click", clickListener, { capture: true });
+
+export {};

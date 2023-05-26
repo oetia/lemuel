@@ -34,7 +34,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-console.log("HERE WE GO AGAIN.");
+console.log("HERE WE GO AGAIN...");
 function recreateNode(el, withChildren) {
     var _a;
     if (el.parentNode) {
@@ -49,17 +49,17 @@ function recreateNode(el, withChildren) {
         }
     }
 }
+// @ts-ignore
 window.recreateNode = recreateNode;
 recreateNode(document.body); // Clean up old event listeners
 function clickListener(event) {
+    var _a, _b;
     return __awaiter(this, void 0, void 0, function () {
         function extractRawPostUrl(path) {
-            console.log(path);
             for (var idx = 0; idx < path.length; idx++) {
                 var element = path[idx];
                 if (element.tagName == "DIV" &&
                     element.classList.contains("mantine-mefm9g")) {
-                    console.log(element.children);
                     for (var idx2 = 0; idx2 < element.children.length; idx2++) {
                         var childElem = element.children[idx2];
                         if (childElem.tagName == "A") {
@@ -87,44 +87,54 @@ function clickListener(event) {
                 });
             });
         }
-        function initiateDownload(imageUrl) {
+        function initiateDownload(imageUrl, folder) {
             return __awaiter(this, void 0, void 0, function () {
                 return __generator(this, function (_a) {
-                    console.log(imageUrl);
+                    console.log(imageUrl, folder);
                     return [2 /*return*/];
                 });
             });
         }
         var path, idx, element, rawPostUrl, imageUrl;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        return __generator(this, function (_c) {
+            switch (_c.label) {
                 case 0:
                     path = event.composedPath();
                     idx = 0;
-                    _a.label = 1;
+                    _c.label = 1;
                 case 1:
-                    if (!(idx < path.length)) return [3 /*break*/, 6];
+                    if (!(idx < path.length)) return [3 /*break*/, 8];
                     element = path[idx];
                     if (!(element.tagName === "BUTTON" &&
-                        element.classList.contains("mantine-UnstyledButton-root"))) return [3 /*break*/, 5];
-                    rawPostUrl = extractRawPostUrl(path.slice(idx + 1));
-                    console.log(rawPostUrl);
-                    if (!rawPostUrl) return [3 /*break*/, 4];
+                        element.classList.contains("mantine-UnstyledButton-root") &&
+                        element.classList.contains("mantine-Button-root") &&
+                        element.classList.contains("mantine-5ko2nj")) // not selected class
+                    ) return [3 /*break*/, 7]; // not selected class
+                    rawPostUrl = extractRawPostUrl(path);
+                    if (!rawPostUrl) return [3 /*break*/, 6];
                     return [4 /*yield*/, getImageUrlFromRawPostUrl(rawPostUrl)];
                 case 2:
-                    imageUrl = _a.sent();
-                    if (!imageUrl) return [3 /*break*/, 4];
-                    return [4 /*yield*/, initiateDownload(imageUrl)];
+                    imageUrl = _c.sent();
+                    if (!imageUrl) return [3 /*break*/, 6];
+                    if (!((_a = element.textContent) === null || _a === void 0 ? void 0 : _a.includes("👍"))) return [3 /*break*/, 4];
+                    return [4 /*yield*/, initiateDownload(imageUrl, "like")];
                 case 3:
-                    _a.sent();
-                    _a.label = 4;
-                case 4: return [3 /*break*/, 6];
+                    _c.sent();
+                    return [3 /*break*/, 6];
+                case 4:
+                    if (!((_b = element.textContent) === null || _b === void 0 ? void 0 : _b.includes("❤️"))) return [3 /*break*/, 6];
+                    return [4 /*yield*/, initiateDownload(imageUrl, "love")];
                 case 5:
+                    _c.sent();
+                    _c.label = 6;
+                case 6: return [3 /*break*/, 8];
+                case 7:
                     idx++;
                     return [3 /*break*/, 1];
-                case 6: return [2 /*return*/];
+                case 8: return [2 /*return*/];
             }
         });
     });
 }
 document.body.addEventListener("click", clickListener, { capture: true });
+// export {};

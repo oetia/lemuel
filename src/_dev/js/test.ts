@@ -1,4 +1,4 @@
-console.log("HERE WE GO AGAIN.");
+console.log("HERE WE GO AGAIN...");
 
 function recreateNode(el: HTMLElement, withChildren?: boolean) {
     if (el.parentNode) {
@@ -11,19 +11,19 @@ function recreateNode(el: HTMLElement, withChildren?: boolean) {
         }
     }
 }
+
+// @ts-ignore
 window.recreateNode = recreateNode;
 recreateNode(document.body); // Clean up old event listeners
 
 async function clickListener(event: MouseEvent) {
     function extractRawPostUrl(path: EventTarget[]) {
-        console.log(path);
         for (let idx = 0; idx < path.length; idx++) {
             const element = path[idx] as HTMLElement;
             if (
                 element.tagName == "DIV" &&
                 element.classList.contains("mantine-mefm9g")
             ) {
-                console.log(element.children);
                 for (let idx2 = 0; idx2 < element.children.length; idx2++) {
                     const childElem = element.children[idx2];
                     if (childElem.tagName == "A") {
@@ -44,8 +44,8 @@ async function clickListener(event: MouseEvent) {
         return ogImageUrl;
     }
 
-    async function initiateDownload(imageUrl: string) {
-        console.log(imageUrl);
+    async function initiateDownload(imageUrl: string, folder: string) {
+        console.log(imageUrl, folder);
     }
 
     const path = event.composedPath();
@@ -53,14 +53,19 @@ async function clickListener(event: MouseEvent) {
         const element = path[idx] as HTMLElement;
         if (
             element.tagName === "BUTTON" &&
-            element.classList.contains("mantine-UnstyledButton-root")
+            element.classList.contains("mantine-UnstyledButton-root") &&
+            element.classList.contains("mantine-Button-root") &&
+            element.classList.contains("mantine-5ko2nj") // not selected class
         ) {
-            const rawPostUrl = extractRawPostUrl(path.slice(idx + 1));
-            console.log(rawPostUrl);
+            const rawPostUrl = extractRawPostUrl(path);
             if (rawPostUrl) {
                 const imageUrl = await getImageUrlFromRawPostUrl(rawPostUrl);
                 if (imageUrl) {
-                    await initiateDownload(imageUrl);
+                    if (element.textContent?.includes("👍")) {
+                        await initiateDownload(imageUrl, "like");
+                    } else if (element.textContent?.includes("❤️")) {
+                        await initiateDownload(imageUrl, "love");
+                    }
                 }
             }
             break;
@@ -68,3 +73,5 @@ async function clickListener(event: MouseEvent) {
     }
 }
 document.body.addEventListener("click", clickListener, { capture: true });
+
+// export {};
