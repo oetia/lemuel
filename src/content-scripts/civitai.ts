@@ -1,11 +1,13 @@
 async function clickListener(event: MouseEvent) {
     function extractRawPostUrl(path: EventTarget[]) {
-        console.log(path);
         for (let idx = 0; idx < path.length; idx++) {
             const element = path[idx] as HTMLElement;
             if (
-                element.tagName == "DIV" &&
-                element.classList.contains("mantine-mefm9g")
+                (element.tagName == "DIV" &&
+                    element.classList.contains("mantine-mefm9g")) ||
+                (element.tagName == "DIV" &&
+                    element.classList.contains("mantine-Paper-root") &&
+                    element.classList.contains("mantine-Card-root"))
             ) {
                 console.log(element.children);
                 for (let idx2 = 0; idx2 < element.children.length; idx2++) {
@@ -30,12 +32,13 @@ async function clickListener(event: MouseEvent) {
 
     async function initiateDownload(imageUrl: string, folder: string) {
         const fileType = imageUrl.split(".").pop();
-        chrome.runtime.sendMessage({
+        const message = {
             type: "download",
             url: imageUrl,
             folder,
             fileType,
-        });
+        };
+        chrome.runtime.sendMessage(message);
     }
 
     const path = event.composedPath();
@@ -47,6 +50,7 @@ async function clickListener(event: MouseEvent) {
             element.classList.contains("mantine-Button-root") &&
             element.classList.contains("mantine-5ko2nj") // not selected class
         ) {
+            // console.log(element.textContent);
             const rawPostUrl = extractRawPostUrl(path);
             if (rawPostUrl) {
                 const imageUrl = await getImageUrlFromRawPostUrl(rawPostUrl);

@@ -58,8 +58,11 @@ function clickListener(event) {
         function extractRawPostUrl(path) {
             for (var idx = 0; idx < path.length; idx++) {
                 var element = path[idx];
-                if (element.tagName == "DIV" &&
-                    element.classList.contains("mantine-mefm9g")) {
+                if ((element.tagName == "DIV" &&
+                    element.classList.contains("mantine-mefm9g")) ||
+                    (element.tagName == "DIV" &&
+                        element.classList.contains("mantine-Paper-root") &&
+                        element.classList.contains("mantine-Card-root"))) {
                     for (var idx2 = 0; idx2 < element.children.length; idx2++) {
                         var childElem = element.children[idx2];
                         if (childElem.tagName == "A") {
@@ -110,7 +113,9 @@ function clickListener(event) {
                         element.classList.contains("mantine-Button-root") &&
                         element.classList.contains("mantine-5ko2nj")) // not selected class
                     ) return [3 /*break*/, 7]; // not selected class
+                    console.log(element.textContent);
                     rawPostUrl = extractRawPostUrl(path);
+                    console.log(rawPostUrl);
                     if (!rawPostUrl) return [3 /*break*/, 6];
                     return [4 /*yield*/, getImageUrlFromRawPostUrl(rawPostUrl)];
                 case 2:
