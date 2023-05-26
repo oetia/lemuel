@@ -6,8 +6,10 @@ const config: webpack.Configuration = {
     mode: "development",
     entry: {
         background: path.join(__dirname, "src", "background.ts"),
-        nhentai: path.join(__dirname, "src", "content-scripts", "nhentai.ts"),
-        halt: path.join(__dirname, "src", "content-scripts", "halt.ts"),
+        twitter: path.join(__dirname, "src", "content-scripts", "twitter.ts"),
+        civitai: path.join(__dirname, "src", "content-scripts", "civitai.ts"),
+        nhen: path.join(__dirname, "src", "content-scripts", "nhentai.ts"),
+        focus: path.join(__dirname, "src", "content-scripts", "focus.ts"),
     },
     output: {
         path: path.join(__dirname, "dist", "src"),
