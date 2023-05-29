@@ -14,3 +14,9 @@ Things that would be nice to have:
 -   top level await
 -   getting dom objects with javascript instead of strings
 -   allowing redefining with const/let/var
+
+## Angelina
+
+Pretty much has given me all of those things that I wanted to have.
+Custom jupyter kernel that hooks into chrome dev console. Comes with typescript support. Extremely convenient for developing chrome extensions. Can probably be modifed to work w. web dev in general.
+I'm really happy with how useful Angelina has proven herself to be.
