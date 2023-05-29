@@ -3,20 +3,18 @@ async function clickListener(event: MouseEvent) {
         for (let idx = 0; idx < path.length; idx++) {
             const element = path[idx] as HTMLElement;
             if (
+                // model page showcase images
+                (element.tagName == "DIV" &&
+                    element.classList.contains("mantine-8od8ev")) ||
+                // model page lower images
                 (element.tagName == "DIV" &&
                     element.classList.contains("mantine-mefm9g")) ||
+                // user page images
                 (element.tagName == "DIV" &&
                     element.classList.contains("mantine-Paper-root") &&
-                    element.classList.contains("mantine-Card-root")) ||
-                (element.tagName == "DIV" &&
-                    element.classList.contains("mantine-7kh5wm"))
+                    element.classList.contains("mantine-Card-root"))
             ) {
-                for (let idx2 = 0; idx2 < element.children.length; idx2++) {
-                    const childElem = element.children[idx2];
-                    if (childElem.tagName == "A") {
-                        return childElem.getAttribute("href");
-                    }
-                }
+                return element.querySelector("a")?.getAttribute("href");
             }
         }
     }
