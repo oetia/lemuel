@@ -79,4 +79,4 @@ async function clickListener(event: MouseEvent) {
 }
 document.body.addEventListener("click", clickListener, { capture: true });
 
-// export {};
+export {};
